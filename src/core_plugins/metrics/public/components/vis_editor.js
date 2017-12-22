@@ -6,13 +6,23 @@ import VisPicker from './vis_picker';
 import PanelConfig from './panel_config';
 import brushHandler from '../lib/create_brush_handler';
 import { get } from 'lodash';
+import { hasPipelineAggregation } from './lib/check_timeseries_pipelines';
+import { ModalConfirm } from './modal_confirm';
+import { removeTimeseriesMetrics } from './lib/remove_timeseries_metrics';
+import { metricTypes } from '../../common/metric_types';
 
 class VisEditor extends Component {
   constructor(props) {
     super(props);
     const { appState } = props;
     const reversed = get(appState, 'options.darkTheme', false);
-    this.state = { model: props.vis.params, dirty: false, autoApply: true, reversed };
+    this.state = {
+      model: props.vis.params,
+      dirty: false,
+      autoApply: true,
+      reversed,
+      showConfirm: false,
+    };
     this.onBrush = brushHandler(props.vis.API.timeFilter);
     this.handleUiState = this.handleUiState.bind(this, props.vis);
     this.handleAppStateChange = this.handleAppStateChange.bind(this);
@@ -41,27 +51,56 @@ class VisEditor extends Component {
     }
   }
 
-  render() {
-    const handleChange = (part) => {
-      const nextModel = { ...this.state.model, ...part };
+  testTimespanMode = part => {
+    const { model } = this.state;
+    const timerangeMode = part.timerange_mode || model.timerange_mode;
+    const type = part.type || model.type;
+    const modeIsAll =
+      timerangeMode && timerangeMode === 'all' && metricTypes.includes(type);
+    const series = part.series || model.series;
+    const containsPipelines = series.some(hasPipelineAggregation);
+    if (modeIsAll && containsPipelines) {
+      this.setState({ showConfirm: true, nextPart: part });
+      return false;
+    }
+    return true;
+  };
 
+  handleChange = part => {
+    if (this.testTimespanMode(part)) {
+      const nextModel = { ...this.state.model, ...part };
       this.props.vis.params = nextModel;
       if (this.state.autoApply) {
         this.props.vis.updateState();
       }
-
       this.setState({ model: nextModel, dirty: !this.state.autoApply });
-    };
+    }
+  };
 
-    const handleAutoApplyToggle = (part) => {
-      this.setState({ autoApply: part.target.checked });
-    };
+  handleAutoApplyToggle = part => {
+    this.setState({ autoApply: part.target.checked });
+  };
 
-    const handleCommit = () => {
-      this.props.vis.updateState();
-      this.setState({ dirty: false });
-    };
+  handleCommit = () => {
+    this.props.vis.updateState();
+    this.setState({ dirty: false });
+  };
 
+  handleCancel = () => {
+    this.handleChange(this.state.nextPart);
+    this.setState({ showConfirm: false, nextPart: {} });
+  };
+
+  handleConfirm = () => {
+    const nextPart = {
+      series: removeTimeseriesMetrics(this.state.model.series),
+      ...this.state.nextPart,
+    };
+    this.handleChange(nextPart);
+    this.setState({ showConfirm: false, nextPart: {} });
+  };
+
+  render() {
     if (!this.props.vis.isEditorMode()) {
       if (!this.props.vis.params || !this.props.visData) return null;
       const reversed = this.state.reversed;
@@ -85,7 +124,7 @@ class VisEditor extends Component {
       return (
         <div className="vis_editor">
           <div className="vis-editor-hide-for-reporting">
-            <VisPicker model={model} onChange={handleChange} />
+            <VisPicker model={model} onChange={this.handleChange} />
           </div>
           <VisEditorVisualization
             dirty={this.state.dirty}
@@ -95,9 +134,9 @@ class VisEditor extends Component {
             onUiState={this.handleUiState}
             uiState={this.props.vis.getUiState()}
             onBrush={this.onBrush}
-            onCommit={handleCommit}
-            onToggleAutoApply={handleAutoApplyToggle}
-            onChange={handleChange}
+            onCommit={this.handleCommit}
+            onToggleAutoApply={this.handleAutoApplyToggle}
+            onChange={this.handleChange}
             title={this.props.vis.title}
             description={this.props.vis.description}
             dateFormat={this.props.config.get('dateFormat')}
@@ -108,9 +147,27 @@ class VisEditor extends Component {
               model={model}
               visData={this.props.visData}
               dateFormat={this.props.config.get('dateFormat')}
-              onChange={handleChange}
+              onChange={this.handleChange}
             />
           </div>
+          <ModalConfirm
+            show={this.state.showConfirm}
+            onConfirm={this.handleConfirm}
+            onCancel={this.handleCancel}
+            title="Incompatible Metrics"
+            confirmButtonText="Remove Metrics"
+            cancelButtonText="Keep"
+            message={
+              <div>
+                <p>
+                  The <strong>data timerange mode</strong> you have chosen is
+                  not compatible with some of the metrics you have configured.
+                  If you proceed the incompatible metrics will be removed.
+                </p>
+                <p>Remove incompatible metrics?</p>
+              </div>
+            }
+          />
         </div>
       );
     }
@@ -128,7 +185,7 @@ class VisEditor extends Component {
 }
 
 VisEditor.defaultProps = {
-  visData: {}
+  visData: {},
 };
 
 VisEditor.propTypes = {
@@ -136,7 +193,7 @@ VisEditor.propTypes = {
   visData: PropTypes.object,
   appState: PropTypes.object,
   renderComplete: PropTypes.func,
-  config: PropTypes.object
+  config: PropTypes.object,
 };
 
 export default VisEditor;

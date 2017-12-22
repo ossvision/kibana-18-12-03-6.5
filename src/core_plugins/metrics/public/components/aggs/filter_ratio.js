@@ -9,21 +9,19 @@ import createTextHandler from '../lib/create_text_handler';
 import { htmlIdGenerator } from '@elastic/eui';
 
 export const FilterRatioAgg = props => {
-  const {
-    series,
-    fields,
-    panel
-  } = props;
+  const { series, fields, panel } = props;
 
   const handleChange = createChangeHandler(props.onChange, props.model);
   const handleSelectChange = createSelectHandler(handleChange);
   const handleTextChange = createTextHandler(handleChange);
-  const indexPattern = series.override_index_pattern && series.series_index_pattern || panel.index_pattern;
+  const indexPattern =
+    (series.override_index_pattern && series.series_index_pattern) ||
+    panel.index_pattern;
 
   const defaults = {
     numerator: '*',
     denominator: '*',
-    metric_agg: 'count'
+    metric_agg: 'count',
   };
 
   const model = { ...defaults, ...props.model };
@@ -44,6 +42,7 @@ export const FilterRatioAgg = props => {
           <div className="vis_editor__row_item">
             <div className="vis_editor__label">Aggregation</div>
             <AggSelect
+              timerangeMode={props.panel.timerange_mode}
               panelType={props.panel.type}
               siblings={props.siblings}
               value={model.type}
@@ -63,7 +62,10 @@ export const FilterRatioAgg = props => {
             />
           </div>
           <div className="vis_editor__row_item">
-            <label className="vis_editor__label" htmlFor={htmlId('denominator')}>
+            <label
+              className="vis_editor__label"
+              htmlFor={htmlId('denominator')}
+            >
               Denominator
             </label>
             <input
@@ -81,11 +83,12 @@ export const FilterRatioAgg = props => {
             <AggSelect
               siblings={props.siblings}
               panelType="metrics"
+              timerangeMode={props.panel.timerange_mode}
               value={model.metric_agg}
               onChange={handleSelectChange('metric_agg')}
             />
           </div>
-          { model.metric_agg !== 'count' ? (
+          {model.metric_agg !== 'count' ? (
             <div className="vis_editor__row_item">
               <label className="vis_editor__label" htmlFor={htmlId('aggField')}>
                 Field
@@ -99,7 +102,8 @@ export const FilterRatioAgg = props => {
                 value={model.field}
                 onChange={handleSelectChange('field')}
               />
-            </div>) : null }
+            </div>
+          ) : null}
         </div>
       </div>
     </AggRow>

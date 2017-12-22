@@ -57,13 +57,16 @@ function SeriesAgg(props) {
         <div className="vis_editor__label">Aggregation</div>
         <AggSelect
           panelType={panel.type}
+          timerangeMode={panel.timerange_mode}
           siblings={props.siblings}
           value={model.type}
           onChange={handleSelectChange('type')}
         />
       </div>
       <div className="vis_editor__item">
-        <label className="vis_editor__label" htmlFor={htmlId('function')}>Function</label>
+        <label className="vis_editor__label" htmlFor={htmlId('function')}>
+          Function
+        </label>
         <Select
           inputProps={{ id: htmlId('function') }}
           value={model.function}
@@ -73,7 +76,6 @@ function SeriesAgg(props) {
       </div>
     </AggRow>
   );
-
 }
 
 SeriesAgg.propTypes = {

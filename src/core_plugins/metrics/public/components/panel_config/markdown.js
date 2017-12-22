@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import SeriesEditor from '../series_editor';
-import { IndexPattern } from '../index_pattern';
 import 'brace/mode/less';
 import Select from 'react-select';
 import createSelectHandler from '../lib/create_select_handler';
@@ -70,11 +69,6 @@ class MarkdownPanelConfig extends Component {
     } else {
       view = (
         <div className="vis_editor__container">
-          <IndexPattern
-            fields={this.props.fields}
-            model={this.props.model}
-            onChange={this.props.onChange}
-          />
           <div className="vis_editor__vis_config-row">
             <div className="vis_editor__label">Background Color</div>
             <ColorPicker
@@ -96,6 +90,12 @@ class MarkdownPanelConfig extends Component {
             <YesNo
               value={model.ignore_global_filter}
               name="ignore_global_filter"
+              onChange={this.props.onChange}
+            />
+            <div className="vis_editor__label">Drop Partial Bucket</div>
+            <YesNo
+              value={model.drop_last_bucket}
+              name="drop_last_bucket"
               onChange={this.props.onChange}
             />
           </div>

@@ -28,7 +28,9 @@ export const StandardDeviationAgg = props => {
   const handleSelectChange = createSelectHandler(handleChange);
   const handleTextChange = createTextHandler(handleChange);
 
-  const indexPattern = series.override_index_pattern && series.series_index_pattern || panel.index_pattern;
+  const indexPattern =
+    (series.override_index_pattern && series.series_index_pattern) ||
+    panel.index_pattern;
   const htmlId = htmlIdGenerator();
 
   return (
@@ -43,13 +45,16 @@ export const StandardDeviationAgg = props => {
         <div className="vis_editor__label">Aggregation</div>
         <AggSelect
           panelType={props.panel.type}
+          timerangeMode={props.panel.timerangeMode}
           siblings={props.siblings}
           value={model.type}
           onChange={handleSelectChange('type')}
         />
       </div>
       <div className="vis_editor__std_deviation-field">
-        <label className="vis_editor__label" htmlFor={htmlId('field')}>Field</label>
+        <label className="vis_editor__label" htmlFor={htmlId('field')}>
+          Field
+        </label>
         <FieldSelect
           id={htmlId('field')}
           fields={fields}
@@ -61,7 +66,9 @@ export const StandardDeviationAgg = props => {
         />
       </div>
       <div className="vis_editor__std_deviation-sigma_item">
-        <label className="vis_editor__label" htmlFor={htmlId('sigma')}>Sigma</label>
+        <label className="vis_editor__label" htmlFor={htmlId('sigma')}>
+          Sigma
+        </label>
         <input
           id={htmlId('sigma')}
           className="vis_editor__std_deviation-sigma"
@@ -70,7 +77,9 @@ export const StandardDeviationAgg = props => {
         />
       </div>
       <div className="vis_editor__row_item">
-        <label className="vis_editor__label" htmlFor={htmlId('mode')}>Mode</label>
+        <label className="vis_editor__label" htmlFor={htmlId('mode')}>
+          Mode
+        </label>
         <Select
           inputProps={{ id: htmlId('mode') }}
           options={modeOptions}

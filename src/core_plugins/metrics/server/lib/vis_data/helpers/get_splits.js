@@ -4,6 +4,7 @@ import _ from 'lodash';
 import getLastMetric from './get_last_metric';
 import getSplitColors from './get_split_colors';
 import { formatKey } from './format_key';
+import { metricTypes } from '../../../../common/metric_types';
 export default function getSplits(resp, panel, series) {
   const meta = _.get(resp, `aggregations.${series.id}.meta`);
   const color = new Color(series.color);
@@ -18,6 +19,14 @@ export default function getSplits(resp, panel, series) {
         bucket.label = formatKey(bucket.key, series);
         bucket.color = panel.type === 'top_n' ? color.hex() : colors.shift();
         bucket.meta = meta;
+        if (metricTypes.includes(panel.type) && panel.timerange_mode === 'all') {
+          bucket.timeseries = {
+            buckets: [
+              { key: Date.now(), ...bucket.timeseries.buckets._all },
+              { key: Date.now(), ...bucket.timeseries.buckets._all } // need atleast 2 buckets
+            ]
+          };
+        }
         return bucket;
       });
     }
@@ -30,6 +39,14 @@ export default function getSplits(resp, panel, series) {
         bucket.color = filter.color;
         bucket.label = filter.label || filter.filter || '*';
         bucket.meta = meta;
+        if (metricTypes.includes(panel.type) && panel.timerange_mode === 'all') {
+          bucket.timeseries = {
+            buckets: [
+              { key: Date.now(), ...bucket.timeseries.buckets._all },
+              { key: Date.now(), ...bucket.timeseries.buckets._all } // need atleast 2 buckets
+            ]
+          };
+        }
         return bucket;
       });
     }
@@ -37,7 +54,15 @@ export default function getSplits(resp, panel, series) {
 
   const timeseries = _.get(resp, `aggregations.${series.id}.timeseries`);
   const mergeObj = {
-    timeseries
+    meta,
+    timeseries: metricTypes.includes(panel.type) && panel.timerange_mode === 'all' ?
+      {
+        buckets: [
+          { key: Date.now(), ...timeseries.buckets._all },
+          { key: Date.now(), ...timeseries.buckets._all } // need atleast 2 buckets
+        ]
+      } :
+      timeseries
   };
   series.metrics
     .filter(m => /_bucket/.test(m.type))

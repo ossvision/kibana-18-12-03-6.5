@@ -1,4 +1,4 @@
-export default panel => error => {
+export default (panel, request) => error => {
   if (error.isBoom && error.status === 401) throw error;
   const result = {};
   let errorResponse;
@@ -19,5 +19,6 @@ export default panel => error => {
     error: errorResponse,
     series: []
   };
+  if(request) result.meta = { request };
   return result;
 };
