@@ -574,7 +574,7 @@ export function VisualizePageProvider({ getService, getPageObjects }) {
     }
 
     async filterVisByName(vizName) {
-      const input = await find.byCssSelector('input[name="filter"]');
+      const input = await find.byCssSelector('input[aria-label="Filter"]');
       await input.click();
       // can't uses dashes in saved visualizations when filtering
       // or extended character sets
@@ -601,6 +601,7 @@ export function VisualizePageProvider({ getService, getPageObjects }) {
     }
 
     async openSavedVisualization(vizName) {
+      await this.filterVisByName(vizName);
       await this.clickVisualizationByName(vizName);
     }
 
