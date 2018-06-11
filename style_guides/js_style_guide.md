@@ -256,7 +256,7 @@ const foo = {
 ```
 
 Use property value shorthand syntax for properties that share a name with a
-variable. And put them at the beginning:
+variable:
 
 ```js
 const bar = true;
@@ -269,12 +269,6 @@ const foo = {
 // bad
 const foo = {
   bar: bar
-};
-
-// also bad (bar should be first)
-const foo = {
-  baz: false,
-  bar
 };
 ```
 
