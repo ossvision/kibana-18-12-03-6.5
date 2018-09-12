@@ -39,6 +39,7 @@ export function flattenBucket(bucket, path, result) {
 }
 
 export default function toSeriesList(aggs, config) {
+  console.log(aggs);
   return _.map(flattenBucket(aggs), function (values, name) {
     return {
       data: values,
