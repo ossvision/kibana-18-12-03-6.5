@@ -18,6 +18,7 @@ export function timeBucketsToPairs(buckets) {
 }
 
 export function flattenBucket(bucket, path, result) {
+  console.log('.');
   result = result || {};
   path = path || [];
   _.forOwn(bucket, function (val, key) {

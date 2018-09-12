@@ -59,15 +59,27 @@ module.exports = new Datasource('es', {
       fit: 'nearest'
     });
 
+    console.time('getting callWithRequest');
+
     const { callWithRequest } = tlConfig.server.plugins.elasticsearch.getCluster('data');
+
+    console.timeEnd('getting callWithRequest');
+    console.time('buildRequest');
 
     const body = buildRequest(config, tlConfig);
 
+    console.timeEnd('buildRequest');
+    console.time('callWithRequest');
+
     return callWithRequest(tlConfig.request, 'search', body).then(function (resp) {
+      console.timeEnd('callWithRequest');
       if (!resp._shards.total) throw new Error('Elasticsearch index not found: ' + config.index);
+      console.time('toSeriesList');
+      const series = toSeriesList(resp.aggregations, config);
+      console.timeEnd('toSeriesList');
       return {
         type: 'seriesList',
-        list: toSeriesList(resp.aggregations, config)
+        list: series
       };
     });
   }
