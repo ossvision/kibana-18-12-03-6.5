@@ -142,6 +142,7 @@ module.exports = function (tlConfig) {
         const resolvedDatasource = resolvedDatasources[i];
 
         if (resolvedDatasource.isRejected()) {
+          console.log('rejected datasource');
           if (resolvedDatasource.reason().isBoom) {
             throw resolvedDatasource.reason();
           } else {
