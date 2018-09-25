@@ -71,11 +71,11 @@ module.exports = new Datasource('es', {
     console.timeEnd('buildRequest');
     console.time('callWithRequest');
 
-    console.log('request body:', body);
+    console.log('request body:', JSON.stringify(body));
 
     return callWithRequest(tlConfig.request, 'search', body).then(function (resp) {
       console.timeEnd('callWithRequest');
-      console.log('response:', resp);
+      console.log('response:', JSON.stringify(resp));
       if (!resp._shards.total) throw new Error('Elasticsearch index not found: ' + config.index);
       console.time('toSeriesList');
       const series = toSeriesList(resp.aggregations, config);
