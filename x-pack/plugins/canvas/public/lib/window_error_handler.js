@@ -47,9 +47,11 @@ window.canvasInitErrorHandler = () => {
   window.onerror = (...args) => {
     const [message, , , , err] = args;
 
-    const isKnownError = Object.keys(knownErrors).find(errorName => {
-      return err.constructor.name === errorName || message.indexOf(errorName) >= 0;
-    });
+    const isKnownError =
+      err &&
+      Object.keys(knownErrors).find(errorName => {
+        return err.constructor.name === errorName || message.indexOf(errorName) >= 0;
+      });
     if (isKnownError) return;
 
     // uncaught errors are silenced in dev mode

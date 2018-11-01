@@ -77,7 +77,9 @@ module.exports = {
               {
                 targets: {
                   node: 'current',
+                  browsers: ['last 2 versions', '> 5%', 'Safari 7'],
                 },
+                useBuiltIns: true,
               },
             ],
           ],
@@ -88,6 +90,11 @@ module.exports = {
             'transform-async-to-generator',
             'transform-class-properties',
             [
+              'transform-runtime',
+              {
+                polyfill: false,
+                regenerator: true,
+              },
               'inline-react-svg',
               {
                 ignorePattern: 'images/*',
@@ -107,6 +114,13 @@ module.exports = {
             'transform-object-rest-spread',
             'transform-async-to-generator',
             'transform-class-properties',
+            [
+              'transform-runtime',
+              {
+                polyfill: false,
+                regenerator: true,
+              },
+            ],
           ],
           presets: [
             'react',
@@ -115,7 +129,9 @@ module.exports = {
               {
                 targets: {
                   node: 'current',
+                  browsers: ['last 2 versions', '> 5%', 'Safari 7'],
                 },
+                useBuiltIns: true,
               },
             ],
           ],

@@ -1,18 +1,27 @@
 {
-	"plugins": [
-		"transform-object-rest-spread",
-		"transform-async-to-generator",
-		"transform-class-properties"
-	],
-	"presets": [
-		"react",
-		[
-		"env",
-		{
-			"targets": {
-				"node": "current"
-			}
-		}
-		]
-	]
+  "plugins": [
+    "transform-object-rest-spread",
+    "transform-async-to-generator",
+    "transform-class-properties",
+    [
+      "transform-runtime",
+      {
+        "polyfill": false,
+        "regenerator": true
+      }
+    ]
+  ],
+  "presets": [
+    "react",
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current",
+          "browsers": ["last 2 versions", "> 5%", "Safari 7"]
+        },
+        "useBuiltIns": true
+      }
+    ]
+  ]
 }
