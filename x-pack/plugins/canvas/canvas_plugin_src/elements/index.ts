@@ -31,7 +31,7 @@ import { verticalBarChart } from './vert_bar_chart';
 import { verticalProgressBar } from './vertical_progress_bar';
 import { verticalProgressPill } from './vertical_progress_pill';
 
-export const elementSpecs = [
+export const elementSpecs: CanvasElement[] = [
   areaChart,
   bubbleChart,
   debug,

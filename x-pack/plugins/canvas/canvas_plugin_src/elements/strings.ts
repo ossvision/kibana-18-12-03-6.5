@@ -44,7 +44,7 @@ export const ElementStrings: {
       defaultMessage: 'A customizable donut chart',
     }),
   },
-  dropdownFilter: {
+  dropdown_filter: {
     displayName: i18n.translate('xpack.canvas.elements.dropdownFilterDisplayName', {
       defaultMessage: 'Dropdown Filter',
     }),
@@ -188,7 +188,7 @@ export const ElementStrings: {
       defaultMessage: 'A customizable tilted pie chart',
     }),
   },
-  timeFilter: {
+  time_filter: {
     displayName: i18n.translate('xpack.canvas.elements.timeFilterDisplayName', {
       defaultMessage: 'Time filter',
     }),

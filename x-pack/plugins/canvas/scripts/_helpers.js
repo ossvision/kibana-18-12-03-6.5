@@ -17,3 +17,10 @@ exports.runKibanaScript = function(name, args = []) {
   process.argv.splice(2, 0, ...args);
   require('../../../../scripts/' + name);
 };
+
+exports.runXPackScript = function(name, args = []) {
+  console.log(__dirname);
+  process.chdir(resolve(__dirname, '../../..'));
+  process.argv.splice(2, 0, ...args);
+  require('../../../scripts/' + name);
+};
