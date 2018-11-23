@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const lineChart: CanvasElement = () => ({
   name: 'lineChart',
-  displayName: 'Line chart',
-  help: 'A customizable line chart',
   image: header,
   expression: `filters
 | demodata

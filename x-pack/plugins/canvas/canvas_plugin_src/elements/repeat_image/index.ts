@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const repeatImage: CanvasElement = () => ({
   name: 'repeatImage',
-  displayName: 'Image repeat',
-  help: 'Repeats an image N times',
   image: header,
   expression: `filters
 | demodata

@@ -9,8 +9,6 @@ import header from './header.png';
 
 export const progressSemicircle: CanvasElement = () => ({
   name: 'progressSemicircle',
-  displayName: 'Progress semicircle',
-  help: 'Displays progress as a portion of a semicircle',
   width: 200,
   height: 100,
   image: header,

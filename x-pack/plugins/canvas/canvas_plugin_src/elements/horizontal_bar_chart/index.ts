@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const horizontalBarChart: CanvasElement = () => ({
   name: 'horizontalBarChart',
-  displayName: 'Horizontal bar chart',
-  help: 'A customizable horizontal bar chart',
   image: header,
   expression: `filters
 | demodata

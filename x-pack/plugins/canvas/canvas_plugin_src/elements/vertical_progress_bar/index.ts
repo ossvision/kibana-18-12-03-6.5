@@ -9,8 +9,6 @@ import header from './header.png';
 
 export const verticalProgressBar: CanvasElement = () => ({
   name: 'verticalProgressBar',
-  displayName: 'Vertical progress bar',
-  help: 'Displays progress as a portion of a vertical bar',
   width: 80,
   height: 400,
   image: header,

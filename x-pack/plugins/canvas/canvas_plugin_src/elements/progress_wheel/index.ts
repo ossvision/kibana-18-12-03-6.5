@@ -9,8 +9,6 @@ import header from './header.png';
 
 export const progressWheel: CanvasElement = () => ({
   name: 'progressWheel',
-  displayName: 'Progress wheel',
-  help: 'Displays progress as a portion of a wheel',
   width: 200,
   height: 200,
   image: header,

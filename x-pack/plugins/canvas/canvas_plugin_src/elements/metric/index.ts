@@ -9,8 +9,6 @@ import header from './header.png';
 
 export const metric: CanvasElement = () => ({
   name: 'metric',
-  displayName: 'Metric',
-  help: 'A number with a label',
   width: 200,
   height: 100,
   image: header,

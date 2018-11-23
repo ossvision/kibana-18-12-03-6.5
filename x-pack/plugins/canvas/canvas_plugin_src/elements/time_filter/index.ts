@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const timeFilter: CanvasElement = () => ({
   name: 'time_filter',
-  displayName: 'Time filter',
-  help: 'Set a time window',
   image: header,
   height: 50,
   expression: `timefilterControl compact=true column=@timestamp

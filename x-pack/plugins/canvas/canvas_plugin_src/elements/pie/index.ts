@@ -8,10 +8,8 @@ import header from './header.png';
 
 export const pie: CanvasElement = () => ({
   name: 'pie',
-  displayName: 'Pie chart',
   width: 300,
   height: 300,
-  help: 'A simple pie chart',
   image: header,
   expression: `filters
 | demodata

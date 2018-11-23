@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const shape: CanvasElement = () => ({
   name: 'shape',
-  displayName: 'Shape',
-  help: 'A customizable shape',
   width: 200,
   height: 200,
   image: header,

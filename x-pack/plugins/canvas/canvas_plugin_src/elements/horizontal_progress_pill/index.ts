@@ -9,8 +9,6 @@ import header from './header.png';
 
 export const horizontalProgressPill: CanvasElement = () => ({
   name: 'horizontalProgressPill',
-  displayName: 'Horizontal progress pill',
-  help: 'Displays progress as a portion of a horizontal pill',
   width: 400,
   height: 30,
   image: header,
