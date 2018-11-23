@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const revealImage: CanvasElement = () => ({
   name: 'revealImage',
-  displayName: 'Image reveal',
-  help: 'Reveals a percentage of an image',
   image: header,
   expression: `filters
 | demodata
