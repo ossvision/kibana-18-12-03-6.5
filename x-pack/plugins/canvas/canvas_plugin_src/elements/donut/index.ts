@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const donut: CanvasElement = () => ({
   name: 'donut',
-  displayName: 'Donut chart',
-  help: 'A customizable donut chart',
   image: header,
   expression: `filters
 | demodata

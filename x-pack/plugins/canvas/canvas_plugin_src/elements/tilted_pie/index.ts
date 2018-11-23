@@ -8,10 +8,8 @@ import header from './header.png';
 
 export const tiltedPie: CanvasElement = () => ({
   name: 'tiltedPie',
-  displayName: 'Tilted pie chart',
   width: 500,
   height: 250,
-  help: 'A customizable tilted pie chart',
   image: header,
   expression: `filters
 | demodata

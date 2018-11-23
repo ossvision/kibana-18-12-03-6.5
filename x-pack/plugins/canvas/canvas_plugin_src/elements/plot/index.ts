@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const plot: CanvasElement = () => ({
   name: 'plot',
-  displayName: 'Coordinate plot',
-  help: 'Mixed line, bar or dot charts',
   image: header,
   expression: `filters
 | demodata

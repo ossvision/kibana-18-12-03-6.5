@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const areaChart: CanvasElement = () => ({
   name: 'areaChart',
-  displayName: 'Area chart',
-  help: 'A line chart with a filled body',
   image: header,
   expression: `filters
   | demodata

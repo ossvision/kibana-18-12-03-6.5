@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const image: CanvasElement = () => ({
   name: 'image',
-  displayName: 'Image',
-  help: 'A static image',
   image: header,
   expression: `image dataurl=null mode="contain"
 | render`,

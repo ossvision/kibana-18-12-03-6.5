@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const markdown: CanvasElement = () => ({
   name: 'markdown',
-  displayName: 'Markdown',
-  help: 'Markup from Markdown',
   image: header,
   expression: `filters
 | demodata

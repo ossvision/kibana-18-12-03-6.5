@@ -8,8 +8,6 @@ import header from './header.png';
 
 export const bubbleChart: CanvasElement = () => ({
   name: 'bubbleChart',
-  displayName: 'Bubble chart',
-  help: 'A customizable bubble chart',
   width: 700,
   height: 300,
   image: header,
